@@ -1,0 +1,68 @@
+<div align="center">
+  <button (click)="setSelection(0)" *ngIf="currentSelection != 0">Table</button>
+  <button (click)="setSelection(1)" *ngIf="currentSelection != 1">Good vs Bad Ranking</button>
+  <button (click)="setSelection(2)" *ngIf="currentSelection != 2">Facebook vs Imdb Ranking</button>
+</div>
+
+<div class="row" *ngIf="currentSelection == 1">
+  <div class="col-md-6">
+    <div style="display: block;">
+      <canvas baseChart width="400" height="400"
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="currentSelection == 2">
+  <div style="display: block">
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+</div>
+<div *ngIf="currentSelection == 0">
+
+  <div class="row">
+    <div class="col-md-4">
+      <input *ngIf="config.filtering" placeholder="Filter all columns"
+             [ngTableFiltering]="config.filtering"
+             class="form-control"
+             (tableChanged)="onChangeTable(config)"/>
+    </div>
+  </div>
+
+  <br>
+  <ng-table [config]="config"
+            (tableChanged)="onChangeTable(config)"
+            (cellClicked)="onCellClick($event)"
+            [rows]="rows" [columns]="columns">
+  </ng-table>
+
+  <pagination *ngIf="config.paging"
+              class="pagination-sm"
+              [(ngModel)]="page"
+              [totalItems]="length"
+              [itemsPerPage]="itemsPerPage"
+              [maxSize]="maxSize"
+              [boundaryLinks]="true"
+              [rotate]="false"
+              (pageChanged)="onChangeTable(config, $event)"
+              (numPages)="numPages = $event">
+  </pagination>
+
+
+  <pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>
+
+</div>
