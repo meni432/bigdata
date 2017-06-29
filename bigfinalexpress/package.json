@@ -1,0 +1,22 @@
+{
+  "name": "final-server",
+  "version": "1.0.0",
+  "description": "CLI chat with readline and socket.io",
+  "main": "server.js",
+  "author": "Or, Ido and Meni",
+  "dependencies": {
+    "socket.io": "latest",
+    "socket.io-client": "latest",
+    "ansi-color": "latest",
+    "express": "latest",
+    "mongodb": "latest",
+    "body-parser": "latest"
+
+  },
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {},
+  "license": "ISC"
+}
